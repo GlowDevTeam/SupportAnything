@@ -29,8 +29,7 @@ app.get('/contact', function(req, res) {
 
 // about page 
 app.get('/run', function(req, res) {
-	
-    app.ImageProcessing.ProcessImage.addMask({},{});
+    app.ImageProcessing.ProcessImage.addMask("resources/Images/guy.png",{});
     
 });
 
