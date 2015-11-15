@@ -1,5 +1,8 @@
 var express = require('express');
+var load = require('express-load');
 var app = express();
+
+load('./ImageProcessing/ProcessImage.js').into(app);
 
 // set resources
 console.log(__dirname + '/resources');
@@ -22,6 +25,13 @@ app.get('/about', function(req, res) {
 // about page 
 app.get('/contact', function(req, res) {
 	res.render('pages/contact');
+});
+
+// about page 
+app.get('/run', function(req, res) {
+	
+    app.ImageProcessing.ProcessImage.addMask({},{});
+    
 });
 
 app.listen(8085);
