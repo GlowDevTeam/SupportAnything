@@ -5,20 +5,24 @@
 </head>
 <body class="container">
 
-	<header>
+	<div class="section header">
 		<% include ../partials/header %>
-	</header>
+	</div>
 
-	<main>
-		Express your support for anything!
+	<div class="section gallery">
 
-		<a href="/auth/facebook" class="btn btn-primary"><span class="fa fa-facebook"></span> Facebook</a>
+		<div class="section login">
+			<a href="/auth/facebook" class="btn btn-block btn-social btn-facebook">
+	      <span class="fa fa-facebook"></span> Sign in with Facebook
+	    </a>
+		</div>
 
-	</main>
+		<% include ../partials/gallery-fake %>
+	</div>
 
-	<footer>
+	<div class="section footer">
 		<% include ../partials/footer %>
-	</footer>
+	</div>
 
 </body>
 </html>

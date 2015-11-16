@@ -5,34 +5,17 @@
 </head>
 <body class="container">
 
-	<header>
+	<div class="section header">
 		<% include ../partials/header %>
-	</header>
+	</div>
 
-	<main>
-		Express your support for anything!
+	<div class="section gallery">
+		<% include ../partials/gallery %>
+	</div>
 
-		<div class="images-support">
-			<div class="images-selected">
-				<div class="picture">
-					<img id="support-pic3" src="<%= user.profilePicture %>" />
-						</div>
-
-				<div class="picture">
-					<img id="support-pic2" src="/images/gato.jpg" />
-				</div>
-
-			</div>
-			<div class="images-result">
-				<img id="support-pic3" src="/images/result.jpg" />
-			</div>
-		</div>
-
-	</main>
-
-	<footer>
+	<div class="section footer">
 		<% include ../partials/footer %>
-	</footer>
+	</div>
 
 </body>
 </html>
