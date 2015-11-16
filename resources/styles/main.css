@@ -1,0 +1,28 @@
+.images-support {
+  width: 420px;
+  height: 280px;
+}
+
+.images-support img {
+width: 100%;
+height: 100%;
+}
+
+.images-selected {
+  float:left;
+  width: 38%;
+  height: 100%;
+  border: 1px solid black;
+}
+
+.images-selected .picture {
+  height: 50%;
+  border: 1px solid red;
+}
+
+.images-result {
+  float:left;
+  width: 62%;
+  height: 100%;
+  border: 1px solid green;
+}
