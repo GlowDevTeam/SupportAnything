@@ -52,14 +52,18 @@ app.get('/login', function(req, res) {
 });
 
 // about page
-app.get('/run', function(req, res) {
-	app.ImageProcessing.ProcessImage.addMask("resources/Images/albert-einstein.jpg","resources/Images/bandeira-minas.jpg");
-
+app.post('/run', function(req, res) {
+	console.log('run entrou');
+	var maskimage = 'resources' + req.body.mask;
+	console.log('maskimage: ' + maskimage);
+	app.ImageProcessing.ProcessImage.addMask(req.user.id, req.user.profilePicture, maskimage, function(){});
+	res.send(req.user.id);
 });
 
 app.get('/', isLoggedIn, function(req, res) {
-	app.ImageProcessing.ProcessImage.addMask(req.user.id, req.user.profilePicture,"resources/Images/bandeira-minas.jpg");
-	res.render('pages/index',{user: req.user});
+	app.ImageProcessing.ProcessImage.addMask(req.user.id, req.user.profilePicture,"resources/Images/bandeira-minas.jpg", function (){
+		res.render('pages/index',{user: req.user});
+	});
 });
 
 app.get('/auth/facebook', passport.authenticate('facebook', { scope : ['public_profile'] }));
