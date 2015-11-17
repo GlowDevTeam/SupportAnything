@@ -54,8 +54,8 @@ app.get('/login', function(req, res) {
 // about page
 app.post('/run', function(req, res) {
 	var maskimage = 'resources' + req.body.mask;
-	app.ImageProcessing.ProcessImage.addMask(req.user.id, req.user.profilePicture, maskimage, function(err, buffer){
-		res.send(buffer);
+	app.ImageProcessing.ProcessImage.addMask(req.user.id, req.user.profilePicture, maskimage, function(result){
+		res.send(result);
 	});
 });
 

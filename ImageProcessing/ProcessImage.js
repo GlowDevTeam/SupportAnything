@@ -13,9 +13,7 @@ module.exports = function (app) {
         Jimp.read(mask, function (err, maskImg) {
           if (err) throw err;
           imageLocation = 'resources/Images/'+ id +'.jpg';
-          //origImg.resize(768, 768).composite(maskImg.resize(768, 768).opacity(0.35),0,0).write(imageLocation);
-          origImg.resize(768, 768).composite(maskImg.resize(768, 768).opacity(0.35),0,0)
-            .getBuffer( Jimp.MIME_JPEG, callback);
+          origImg.resize(768, 768).composite(maskImg.resize(768, 768).opacity(0.35),0,0).write(imageLocation, callback(id));
         });
       });
     }
