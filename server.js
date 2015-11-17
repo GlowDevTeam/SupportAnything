@@ -53,11 +53,10 @@ app.get('/login', function(req, res) {
 
 // about page
 app.post('/run', function(req, res) {
-	console.log('run entrou');
 	var maskimage = 'resources' + req.body.mask;
-	console.log('maskimage: ' + maskimage);
-	app.ImageProcessing.ProcessImage.addMask(req.user.id, req.user.profilePicture, maskimage, function(){});
-	res.send(req.user.id);
+	app.ImageProcessing.ProcessImage.addMask(req.user.id, req.user.profilePicture, maskimage, function(err, buffer){
+		res.send(buffer);
+	});
 });
 
 app.get('/', isLoggedIn, function(req, res) {
