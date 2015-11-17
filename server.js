@@ -15,7 +15,11 @@ app.use(logger());
 app.use(cookieParser());
 app.use(bodyParser());
 app.use(methodOverride());
-app.use(session({ secret: 'keyboard cat' }));
+app.use(session({
+	secret: 'keyboard cat',
+  resave: true,
+  saveUninitialized: true
+}));
 // Initialize Passport!  Also use passport.session() middleware, to support
 // persistent login sessions (recommended).
 app.use(passport.initialize());
