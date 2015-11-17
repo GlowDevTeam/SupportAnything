@@ -14,7 +14,7 @@ $.noConflict();
         beforeSend: function() {
           $('.result img').attr({
             'src': '/Images/load.gif',
-            'style': 'background: rgba(0,0,0,0.1);'
+            'style': 'opacity: 0.8'
           });
         },
         success: function(result){
