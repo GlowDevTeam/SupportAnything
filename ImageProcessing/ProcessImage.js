@@ -8,10 +8,8 @@ module.exports = function (app) {
       console.log('addMask entrou');
       var imageLocation;
 
-      Jimp.read(original, function (err, origImg) {
-        if (err) throw err;
-        Jimp.read(mask, function (err, maskImg) {
-          if (err) throw err;
+      Jimp.read(original).then(function (origImg) {
+        Jimp.read(mask).then(function (maskImg) {
           imageLocation = 'resources/Images/'+ id +'.jpg';
           origImg.resize(768, 768).composite(maskImg.resize(768, 768).opacity(0.35),0,0).write(imageLocation, callback(id));
         });
