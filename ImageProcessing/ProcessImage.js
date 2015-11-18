@@ -1,19 +1,25 @@
-var Jimp = require("jimp");
+var gm = require('gm')
+  , im = gm.subClass({ imageMagick: true });
+var exec = require('child_process').exec
 
 module.exports = function (app) {
 
   var ProcessImage = {
 
     addMask: function (id, original, mask, callback) {
-      console.log('addMask entrou');
-      var imageLocation;
 
-      Jimp.read(original).then(function (origImg) {
-        Jimp.read(mask).then(function (maskImg) {
-          imageLocation = 'resources/Images/'+ id +'.jpg';
-          origImg.resize(768, 768).composite(maskImg.resize(768, 768).opacity(0.35),0,0).write(imageLocation, callback(id));
-        });
-      });
+      var imageLocation = 'resources/Images/'+ id +'.jpg';
+
+      im(original)
+  	  .out(mask)
+  	  .out('-alpha','on')
+  	  .out('-compose','dissolve')
+  		.out('-define','compose:args=50')
+  		.out('-composite')
+  		.write(imageLocation, function (err) {
+		  if (err) console.log(err);
+        callback(id)
+  		});
     }
   }
   return ProcessImage;
