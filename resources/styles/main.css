@@ -130,6 +130,7 @@ h1 {
   height: 100%;
   margin-right: 10px;
   opacity: 0.5;
+  cursor: pointer;
 }
 .support-row img:hover {
   opacity: 1;
