@@ -10,7 +10,7 @@
     "express-load": "^1.1.15",
     "express-session": ">= 1.6.1",
     "fs": "0.0.2",
-    "gm": "^1.21.1",
+    "jimp": "^0.2.19",
     "method-override": ">= 2.0.2",
     "passport": ">= 0.0.0",
     "passport-facebook": ">= 0.0.0",

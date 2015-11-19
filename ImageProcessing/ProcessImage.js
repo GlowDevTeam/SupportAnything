@@ -1,5 +1,4 @@
-var gm = require('gm')
-  , im = gm.subClass({ imageMagick: true })
+var Jimp = require('jimp')
   , fs = require('fs')
   , request = require('request');
 
@@ -23,17 +22,15 @@ module.exports = function (app) {
 
       var resultProfilePicture = 'resources/Images/'+ id +'2.jpg';
 
-      im(original)
-  	  .out(mask)
-  	  .out('-resize','640x640')
-  	  .out('-alpha','on')
-  	  .out('-compose','dissolve')
-  		.out('-define','compose:args=50')
-  		.out('-composite')
-  		.write(resultProfilePicture, function (err) {
-	      if (err) console.log(err);
-        else callback(id+'2');
-  		});
+      Jimp.read(original).then(function (origImg) {
+        Jimp.read(mask).then(function (maskImg) {
+          origImg
+            .resize(768, 768)
+            .composite(maskImg.resize(768, 768).opacity(0.35),0,0)
+            .write(resultProfilePicture, callback(id+'2')
+          );
+        });
+      });
     }
   }
   return ProcessImage;
