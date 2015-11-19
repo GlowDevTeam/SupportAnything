@@ -27,8 +27,9 @@ module.exports = function(passport) {
       'id'   : profile.id,
       'name' : profile.name.givenName + ' ' + profile.name.familyName,
       'token': token,
-      'profilePicture': "https://graph.facebook.com/"+profile.id+"/picture?access_token="+token+"&width=768&height=768"
-    }
+      'profilePicture': "https://graph.facebook.com/"+profile.id+"/picture?access_token="+token+"&width=768&height=768",
+      'localProfilePicture': null
+    }  
     return done(null, user);
   }));
 

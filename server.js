@@ -11,12 +11,13 @@ var app = express();
 
 require('./config/passport')(passport);
 
-app.use(logger());
+app.use(logger('combined'))
 app.use(cookieParser());
-app.use(bodyParser());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use(methodOverride());
 app.use(session({
-	secret: 'keyboard cat',
+	secret: 'gatonaboleia',
   resave: true,
   saveUninitialized: true
 }));
@@ -35,48 +36,53 @@ app.use(express.static(__dirname + '/resources'));
 // set the view engine to ejs
 app.set('view engine', 'ejs');
 
-// index page
-//app.get('/', function(req, res) {
-//	res.render('pages/index');
-//});
+// root page
+app.get('/', isLoggedIn, function(req, res) {
+	res.render('pages/index',{user: req.user});
+});
+
+// login page
+app.get('/login', function(req, res) {
+	res.render('pages/login',{user: res.user});
+});
 
 // about page
 app.get('/about', function(req, res) {
 	res.render('pages/about');
 });
 
-// about page
+// contact page
 app.get('/contact', function(req, res) {
 	res.render('pages/contact');
 });
 
-// about page
-app.get('/login', function(req, res) {
-	res.render('pages/login',{user: res.user});
-});
-
-// about page
+// run call
 app.post('/run', function(req, res) {
 	var maskimage = 'resources' + req.body.mask;
-	app.ImageProcessing.ProcessImage.addMask(req.user.id, req.user.profilePicture, maskimage, function(result){
+	app.ImageProcessing.ProcessImage.addMask(req.user.id, req.user.localProfilePicture, maskimage, function(result){
 		res.send(result);
 	});
 });
 
-app.get('/', isLoggedIn, function(req, res) {
-	app.ImageProcessing.ProcessImage.addMask(req.user.id, req.user.profilePicture,"resources/Images/bandeira-minas.jpg", function (){
-		res.render('pages/index',{user: req.user});
-	});
-});
-
+// facebook auth call
 app.get('/auth/facebook', passport.authenticate('facebook', { scope : ['public_profile'] }));
 
 // handle the callback after facebook has authenticated the user
-app.get('/auth/facebook/callback',
-	passport.authenticate('facebook', {
-		successRedirect : '/',
-		failureRedirect : '/login'
-	}));
+app.get('/auth/facebook/callback', function(req, res, next){
+
+	passport.authenticate('facebook', function(err, user, info) {
+    if (err) { return next(err); }
+    if (!user) { return res.redirect('/login'); }
+    req.logIn(user, function(err) {
+      if (err) { return next(err); }
+	    app.ImageProcessing.ProcessImage.saveProfilePicture(req.user.id, req.user.profilePicture, function (result){
+	      req.user.localProfilePicture = 'resources/Images/'+ result + '.jpg';
+	      return res.redirect('/');
+	    });
+    });
+  })(req, res, next)
+
+});
 
 // route for logging out
 app.get('/logout', function(req, res) {
